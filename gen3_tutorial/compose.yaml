@@ -4,7 +4,7 @@ services:
     # Build Docker image using Dockerfile in docker directory
     build: docker
     # Set container name for easy reference
-    container_name: gen3_tutorial_container
+    container_name: gen3_tutorial
     # Use NVIDIA runtime for GPU support
     runtime: nvidia 
     environment:
@@ -23,7 +23,10 @@ services:
       # Mount host /dev directory for USB device access
       - /dev:/dev
       # Mount X11 socket for GUI applications
-      #- /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+      # Mount code directory for ROS workspace
+      - ./gen3_ws:/gen3_ws
 
     # Grant extended privileges to container
     privileged: true
@@ -31,6 +34,3 @@ services:
     tty: true
     # Use host network stack
     network_mode: host
-
-    # Source the ROS 2 Humble setup script
-    command: /bin/bash -c "source /opt/ros/humble/setup.bash && /bin/bash"
