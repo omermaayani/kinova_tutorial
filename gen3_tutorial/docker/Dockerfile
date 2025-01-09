@@ -47,6 +47,6 @@ RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-ament-cmake
 
 # Build the workspace
-    RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3
 RUN echo 'source /gen3_ws/gen3_ws/install/setup.bash' >> ~/.bashrc
